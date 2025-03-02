@@ -15,10 +15,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import drawing.TotoroBasicShapes
 import drawing.LeafHat
 import drawing.RainDrops
 import drawing.TextTest
+import drawing.WobbleTotoro
 
 @Composable
 @Preview
@@ -76,7 +76,7 @@ fun App() {
                     .offset(x = (-150).dp)
                     .zIndex(1f)
             ) {
-                TotoroBasicShapes()
+                WobbleTotoro()
             }
 
             // Small blue Totoro (right)
@@ -86,7 +86,7 @@ fun App() {
                     .offset(x = 250.dp, y = 250.dp)  // Move down to align bottoms
                     .zIndex(1f)
             ) {
-                TotoroBasicShapes(
+                WobbleTotoro(
                     bodyColor = Color(0xFF6A84B0)  // Glaucous blue
                 )
             }
