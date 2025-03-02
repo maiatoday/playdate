@@ -1,0 +1,33 @@
+# Playdate with Totoro
+
+A Kotlin multiplatform project exploring visual techniques through a creative tribute to Studio Ghibli's "My Neighbor Totoro". This project demonstrates various drawing and animation capabilities in Compose, creating an engaging visual experience inspired by the beloved animated film.
+
+## Overview
+
+This project serves as a playground for experimenting with different visual techniques in Kotlin multiplatform using Compose. It combines various drawing methods, including:
+- Canvas and custom drawing
+- Shapes and geometric patterns
+- Color gradients and transitions
+- Text rendering and animations
+
+## Getting Started
+
+The project is structured to showcase different visual techniques layered together on the main composable screen. For detailed information about implementation and available techniques, please refer to our [Visual Guidelines](GUIDELINES.md).
+
+## Visual Inspiration
+
+The project draws inspiration from the charming world of "My Neighbor Totoro", utilizing:
+- Custom color palettes reflecting the film's aesthetic
+- Geometric patterns inspired by the movie's visual elements
+- Creative text implementations using provided fonts
+- Various drawing techniques and animations
+
+## Resources
+
+- Visual guidelines and technical details: [GUIDELINES.md](GUIDELINES.md)
+- Color palette and style references: [docs/look/colors.md](docs/look/colors.md)
+- Implementation examples: [docs/blog/wrapped2023](docs/blog/wrapped2023)
+
+## Note
+
+This is a creative exploration project focused on visual techniques in Kotlin multiplatform. It's designed for learning and experimentation, without any practical application beyond demonstrating interesting visual elements.
