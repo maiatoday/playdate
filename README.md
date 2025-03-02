@@ -28,6 +28,18 @@ The project draws inspiration from the charming world of "My Neighbor Totoro", u
 - Color palette and style references: [docs/look/colors.md](docs/look/colors.md)
 - Implementation examples: [docs/blog/wrapped2023](docs/blog/wrapped2023)
 
+## Fonts Setup
+
+The project requires two fonts to be added to `src/main/resources/fonts/`:
+
+1. Zen Maru Gothic Regular
+   - Download from [Google Fonts](https://fonts.google.com/specimen/Zen+Maru+Gothic)
+   - Save as `ZenMaruGothic-Regular.ttf`
+
+2. Cherry Bomb One Regular
+   - Download from [Google Fonts](https://fonts.google.com/specimen/Cherry+Bomb+One)
+   - Save as `CherryBombOne-Regular.ttf`
+
 ## Note
 
 This is a creative exploration project focused on visual techniques in Kotlin multiplatform. It's designed for learning and experimentation, without any practical application beyond demonstrating interesting visual elements.

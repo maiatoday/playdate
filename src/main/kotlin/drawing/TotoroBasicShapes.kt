@@ -13,14 +13,22 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.Brush
 
 // Color palette for Totoro
-private val bodyGrayDark = Color(0xFF6A6E6D)   // Darker Battleship gray
-private val bodyGrayLight = Color(0xFF808584)   // Battleship gray
+private val defaultBodyColor = Color(0xFF808584)   // Battleship gray
 private val bellyLightGray = Color(0xFFF0F2F3)  // Lighter Platinum
 private val outlineColor = Color(0xFF30333A)    // Onyx
 private val arrowColor = Color(0xFF443F5D)      // English Violet
 
 @Composable
-fun TotoroBasicShapes(modifier: Modifier = Modifier) {
+fun TotoroBasicShapes(
+    modifier: Modifier = Modifier,
+    bodyColor: Color = defaultBodyColor
+) {
+    // Calculate darker variant for gradients
+    val bodyColorDark = bodyColor.copy(
+        red = bodyColor.red * 0.85f,
+        green = bodyColor.green * 0.85f,
+        blue = bodyColor.blue * 0.85f
+    )
     Canvas(modifier = modifier.fillMaxSize()) {
         // Calculate center position and sizes based on canvas size
         val centerX = size.width / 2
@@ -31,7 +39,7 @@ fun TotoroBasicShapes(modifier: Modifier = Modifier) {
 
         // Create body gradient
         val bodyGradient = Brush.radialGradient(
-            colors = listOf(bodyGrayLight, bodyGrayDark),
+            colors = listOf(bodyColor, bodyColorDark),
             center = Offset(centerX + bodyRadius * 0.2f, centerY - bodyRadius * 0.2f),
             radius = bodyRadius * 1.5f
         )
@@ -77,10 +85,10 @@ fun TotoroBasicShapes(modifier: Modifier = Modifier) {
         )
 
         // Draw three arrows in bottom half of belly
-        val arrowY = centerY + bellyHeight * 0.35f  // Position well into bottom half
+        val arrowY = centerY + bellyHeight * 0.2f  // Move arrows higher
         val numArrows = 3
         val totalWidth = arrowSpacing * (numArrows - 1)  // Space between first and last arrow
-        val startX = centerX - totalWidth/2  // Center the group
+        val startX = centerX - totalWidth/2  // Center the arrows
 
         for (i in 0..2) {
             val arrowX = startX + (i * arrowSpacing)
@@ -143,7 +151,7 @@ fun TotoroBasicShapes(modifier: Modifier = Modifier) {
 
         // Create ear gradient
         val earGradient = Brush.linearGradient(
-            colors = listOf(bodyGrayLight, bodyGrayDark),
+            colors = listOf(bodyColor, bodyColorDark),
             start = Offset(0f, earOffsetY),
             end = Offset(0f, earOffsetY + earHeight)
         )
@@ -219,20 +227,49 @@ fun TotoroBasicShapes(modifier: Modifier = Modifier) {
             )
         )
 
-        // Nose
-        val noseRadius = eyeRadius * 0.8f
-        drawCircle(
+        // Nose (half moon shape)
+        val noseRadius = eyeRadius * 0.45f  // Make nose smaller
+        val noseY = eyeOffsetY + eyeRadius * 1.1f   // Move slightly higher
+
+        // Create half moon path
+        val nosePath = Path().apply {
+            // Start from left point
+            moveTo(centerX - noseRadius, noseY)
+
+            // Draw bottom curve
+            quadraticTo(
+                centerX, noseY + noseRadius * 0.6f,  // control point (less deep)
+                centerX + noseRadius, noseY          // end point
+            )
+
+            // Draw top curve
+            quadraticTo(
+                centerX, noseY - noseRadius * 0.4f,  // control point (more curved)
+                centerX - noseRadius, noseY          // end point
+            )
+
+            close()
+        }
+
+        // Draw nose fill
+        drawPath(
+            path = nosePath,
+            color = Color(0xFFFE90B3)  // Baker-Miller pink
+        )
+
+        // Draw nose outline
+        drawPath(
+            path = nosePath,
             color = outlineColor,
-            radius = noseRadius,
-            center = Offset(centerX, eyeOffsetY + eyeRadius * 2)
+            style = Stroke(width = 2f)
         )
 
         // Whiskers
         val whiskerLength = bodyWidth * 0.25f
-        val whiskerSpacing = bodyHeight * 0.06f
-        val whiskerStartX = centerX - bodyWidth * 0.15f
-        val whiskerEndXOffset = whiskerLength * 0.8f
-        val whiskerY = eyeOffsetY + eyeRadius * 3.5f
+        val whiskerSpacing = bodyHeight * 0.035f  // Reduced vertical spacing
+        val whiskerStartX = centerX - bodyWidth * 0.12f  // Closer to center
+        val whiskerEndXOffset = whiskerLength * 0.7f   // Slightly shorter
+        val whiskerY = eyeOffsetY + eyeRadius * 2.2f  // Moved closer to eyes
 
         // Left whiskers
         for (i in -1..1) {
@@ -240,20 +277,20 @@ fun TotoroBasicShapes(modifier: Modifier = Modifier) {
             drawLine(
                 color = outlineColor,
                 start = Offset(whiskerStartX, whiskerY + yOffset),
-                end = Offset(whiskerStartX - whiskerEndXOffset, whiskerY + yOffset + (yOffset * 0.3f)),
-                strokeWidth = 3f
+                end = Offset(whiskerStartX - whiskerEndXOffset, whiskerY + yOffset + (yOffset * 0.2f)),
+                strokeWidth = 2.5f
             )
         }
 
         // Right whiskers
-        val rightWhiskerStartX = centerX + bodyWidth * 0.15f
+        val rightWhiskerStartX = centerX + bodyWidth * 0.12f  // Matching left side
         for (i in -1..1) {
             val yOffset = whiskerSpacing * i
             drawLine(
                 color = outlineColor,
                 start = Offset(rightWhiskerStartX, whiskerY + yOffset),
-                end = Offset(rightWhiskerStartX + whiskerEndXOffset, whiskerY + yOffset + (yOffset * 0.5f)),
-                strokeWidth = 3f
+                end = Offset(rightWhiskerStartX + whiskerEndXOffset, whiskerY + yOffset + (yOffset * 0.2f)),
+                strokeWidth = 2.5f
             )
         }
 
@@ -289,7 +326,7 @@ fun TotoroBasicShapes(modifier: Modifier = Modifier) {
 
         // Create tail gradient
         val tailGradient = Brush.radialGradient(
-            colors = listOf(bodyGrayLight, bodyGrayDark),
+            colors = listOf(bodyColor, bodyColorDark),
             center = Offset(
                 centerX - bodyWidth * 0.4f,
                 centerY + bodyHeight * 0.3f
