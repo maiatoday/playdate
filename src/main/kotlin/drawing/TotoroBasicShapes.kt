@@ -21,7 +21,8 @@ private val arrowColor = Color(0xFF443F5D)      // English Violet
 @Composable
 fun TotoroBasicShapes(
     modifier: Modifier = Modifier,
-    bodyColor: Color = defaultBodyColor
+    bodyColor: Color = defaultBodyColor,
+    mouseClickPosition: Offset? = null
 ) {
     // Calculate darker variant for gradients
     val bodyColorDark = bodyColor.copy(
@@ -195,14 +196,24 @@ fun TotoroBasicShapes(
             center = Offset(centerX - eyeSpacing, eyeOffsetY),
             style = Stroke(width = 4f)
         )
+        // Calculate pupil movement
+        val maxPupilMove = eyeRadius * 0.2f // Maximum distance pupil can move from center
+        val leftPupilBaseX = centerX - eyeSpacing
+        val rightPupilBaseX = centerX + eyeSpacing
+        val pupilBaseY = eyeOffsetY + eyeRadius * 0.3f
+
+        // Calculate pupil positions based on mouse click
+        val (leftPupilX, leftPupilY) = mouseClickPosition?.let { clickPos ->
+            val deltaX = (clickPos.x - leftPupilBaseX).coerceIn(-maxPupilMove, maxPupilMove) * 0.3f
+            val deltaY = (clickPos.y - pupilBaseY).coerceIn(-maxPupilMove, maxPupilMove) * 0.3f
+            Pair(leftPupilBaseX + deltaX, pupilBaseY + deltaY)
+        } ?: Pair(leftPupilBaseX, pupilBaseY)
+
         // Left pupil
         drawCircle(
             color = outlineColor,
             radius = eyeRadius * 0.25f,
-            center = Offset(
-                centerX - eyeSpacing,
-                eyeOffsetY + eyeRadius * 0.3f
-            )
+            center = Offset(leftPupilX, leftPupilY)
         )
 
         // Right eye
@@ -217,14 +228,18 @@ fun TotoroBasicShapes(
             center = Offset(centerX + eyeSpacing, eyeOffsetY),
             style = Stroke(width = 4f)
         )
+        // Calculate right pupil position
+        val (rightPupilX, rightPupilY) = mouseClickPosition?.let { clickPos ->
+            val deltaX = (clickPos.x - rightPupilBaseX).coerceIn(-maxPupilMove, maxPupilMove) * 0.3f
+            val deltaY = (clickPos.y - pupilBaseY).coerceIn(-maxPupilMove, maxPupilMove) * 0.3f
+            Pair(rightPupilBaseX + deltaX, pupilBaseY + deltaY)
+        } ?: Pair(rightPupilBaseX, pupilBaseY)
+
         // Right pupil
         drawCircle(
             color = outlineColor,
             radius = eyeRadius * 0.25f,
-            center = Offset(
-                centerX + eyeSpacing,
-                eyeOffsetY + eyeRadius * 0.3f
-            )
+            center = Offset(rightPupilX, rightPupilY)
         )
 
         // Nose (half moon shape)

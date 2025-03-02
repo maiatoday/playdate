@@ -8,6 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import kotlinx.coroutines.launch
@@ -19,6 +22,7 @@ fun WobbleTotoro(
 ) {
     var isWobbling by remember { mutableStateOf(false) }
     var wobbleDirection by remember { mutableStateOf(1f) }
+    var clickPosition by remember { mutableStateOf<Offset?>(null) }
     val scope = rememberCoroutineScope()
 
     // Animation values
@@ -40,17 +44,23 @@ fun WobbleTotoro(
                 rotationZ = wobbleRotation
                 transformOrigin = TransformOrigin(0.5f, 0.6f)  // Pivot at middle-bottom
             }
-            .clickable(
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() }
-            ) {
-                scope.launch {
-                    isWobbling = true
+            .pointerInput(Unit) {
+                awaitPointerEventScope {
+                    while (true) {
+                        val event = awaitPointerEvent()
+                        if (event.type == PointerEventType.Press) {
+                            clickPosition = event.changes.first().position
+                            scope.launch {
+                                isWobbling = true
+                            }
+                        }
+                    }
                 }
             }
     ) {
         TotoroBasicShapes(
-            bodyColor = bodyColor
+            bodyColor = bodyColor,
+            mouseClickPosition = clickPosition
         )
     }
 }
