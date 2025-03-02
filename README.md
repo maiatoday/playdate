@@ -1,6 +1,8 @@
-# Playdate with Totoro
+# Playdate with Totoro and Junie
 
-A Kotlin multiplatform project exploring visual techniques through a creative tribute to Studio Ghibli's "My Neighbor Totoro". This project demonstrates various drawing and animation capabilities in Compose, creating an engaging visual experience inspired by the beloved animated film.
+![banner](topTotoro.png)
+
+A Kotlin multiplatform project exploring visual techniques through a creative tribute to Studio Ghibli's "My Neighbor Totoro". This project demonstrates various drawing and animation capabilities in Compose, creating an engaging visual experience inspired by the beloved animated film. This is also an experiment with Junie EAP. For the sake of experiment I did not touch the code. I let the agent do all of it.
 
 ## Overview
 

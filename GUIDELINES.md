@@ -1,4 +1,4 @@
-# Visual Guidelines for Totoro Tribute
+# Visual Guidelines for Totoro Tribute - vibecoded with Junie
 
 ## Project Overview
 This Kotlin multiplatform project is a visual tribute to the Studio Ghibli film, "My Neighbor Totoro". The project focuses on implementing various visual techniques to create interesting and engaging visual elements that capture the spirit and charm of the beloved animated film.

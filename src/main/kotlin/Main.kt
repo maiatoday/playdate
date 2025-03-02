@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.offset
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.compose.material.MaterialTheme
@@ -17,6 +18,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import drawing.LeafHat
 import drawing.RainDrops
+import drawing.RainbowText
 import drawing.TextTest
 import drawing.WobbleTotoro
 
@@ -48,6 +50,19 @@ fun App() {
                 )
             }
 
+            // Rainbow title
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .zIndex(3f)
+            ) {
+                RainbowText(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(top = 8.dp, end = 24.dp)
+                )
+            }
+
             // Title text
             Box(
                 modifier = Modifier
@@ -73,7 +88,7 @@ fun App() {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .offset(x = (-150).dp)
+                    .offset(x = (-150).dp, y = 70.dp)  // Moved up
                     .zIndex(1f)
             ) {
                 WobbleTotoro()
@@ -95,7 +110,7 @@ fun App() {
             Box(
                 modifier = Modifier
                     .fillMaxSize(0.15f)
-                    .offset(x = (-160).dp, y = (-160).dp)
+                    .offset(x = (-160).dp, y = (-20).dp)  // Moved hat down
                     .graphicsLayer(
                         rotationZ = -15f,
                         scaleX = 0.8f
